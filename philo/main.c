@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:39:22 by yukoc             #+#    #+#             */
-/*   Updated: 2025/04/29 13:39:36 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/04/30 13:23:53 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	*test(void *arg)
 {
-	int i;
+	int	i;
 
 	(void)arg;
 	i = 3;
@@ -32,9 +32,9 @@ void	*test(void *arg)
 	return (NULL);
 }
 
-int main(void)
+int	main(void)
 {
-	pthread_t thread;
+	pthread_t	thread;
 
 	printf("Hello, World!\n");
 	printf("Creating thread \"test\"...\n");
