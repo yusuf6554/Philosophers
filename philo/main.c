@@ -6,46 +6,31 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:39:22 by yukoc             #+#    #+#             */
-/*   Updated: 2025/04/30 13:23:53 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/04/30 13:48:59 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <unistd.h>
 
-void	*test(void *arg)
+int	main(int argc, char **argv)
 {
-	int	i;
+	t_data	main_data;
 
-	(void)arg;
-	i = 3;
-	while (i > -1)
+	if (argc != 5 && argc != 6)
 	{
-		if (i > 0)
-			printf("BOMBA PATLIYOR %d...\n", i);
-		else
-			printf("BOMBA PATLADI!\n");
-		i--;
-		if (i > -1)
-			sleep(1);
-	}
-	return (NULL);
-}
-
-int	main(void)
-{
-	pthread_t	thread;
-
-	printf("Hello, World!\n");
-	printf("Creating thread \"test\"...\n");
-	if (pthread_create(&thread, NULL, test, NULL) != 0)
-	{
-		perror("Failed to create thread");
+		printf("Error: Wrong number of arguments\n");
 		return (1);
 	}
-	printf("Thread \"test\" created successfully.\n");
-	pthread_join(thread, NULL);
-	printf("Thread \"test\" has finished.\n");
-	printf("Exiting main thread.\n");
-	return (0);
+	if (!check_arguments(argc, argv))
+	{
+		printf("Error: Invalid arguments\n");
+		return (1);
+	}
+	init_philo(&main_data, argc, argv);
+	if (!main_data.philo)
+	{
+		printf("Error: Failed to initialize philosophers\n");
+		return (1);
+	}
+	return (philo_main(&main_data));
 }
