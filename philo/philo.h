@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:34:26 by yukoc             #+#    #+#             */
-/*   Updated: 2025/05/02 15:08:50 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/05/06 14:08:30 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,35 @@
 # include <inttypes.h>
 # include <stdint.h>
 
+# define E_INVARG "Invalid arguments"
+# define E_PHILOINIT "Philosopher initialization failed"
+# define E_THREADINIT "Thread initialization failed"
+# define E_MUTEXINIT "Mutex initialization failed"
+# define E_INVARGNUM "Invalid number of arguments"
+# define E_MALLOC "Memory allocation failed"
+
 typedef struct s_philo
 {
-	int				id;
-	int				philo_count;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				must_eat_count;
-	int				is_dead;
-	int				eat_count;
+	struct s_data	*data;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
 	pthread_t		thread;
-	pthread_t		eat_thread;
-	pthread_t		death_thread;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t *print_mutex;
-	pthread_mutex_t *eat_mutex;
-	pthread_mutex_t *death_mutex;
+	int				eat_count;
+	long long		last_eat_time;
 }			t_philo;
 
 typedef struct s_data
 {
-	t_philo		*philo;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	eat_mutex;
+	pthread_mutex_t	dead_mutex;
+	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	ready_mutex;
+	t_philo			*philos;
+	long long		args[5];
+	int				philo_count;
+	int				philo_dead;
+	int				mutex_error;
 }			t_data;
 
 #endif
