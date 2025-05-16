@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:58:36 by yukoc             #+#    #+#             */
-/*   Updated: 2025/05/06 14:12:28 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/05/16 13:03:44 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	destroy_mutexes(t_data *data)
 		pthread_mutex_destroy(&data->ready_mutex);
 }
 
-static void	free_all(t_data *data)
+void	free_all(t_data *data)
 {
 	if (data->philos)
 		free(data->philos);

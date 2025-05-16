@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:34:26 by yukoc             #+#    #+#             */
-/*   Updated: 2025/05/06 14:08:30 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/05/16 12:59:38 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define E_MUTEXINIT "Mutex initialization failed"
 # define E_INVARGNUM "Invalid number of arguments"
 # define E_MALLOC "Memory allocation failed"
+# define E_PHCNTMISMATCH "Philosopher count mismatch"
 
 typedef struct s_philo
 {
@@ -31,6 +32,7 @@ typedef struct s_philo
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_t		thread;
+	int				id;
 	int				eat_count;
 	long long		last_eat_time;
 }			t_philo;

@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:39:22 by yukoc             #+#    #+#             */
-/*   Updated: 2025/05/06 14:09:20 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/05/16 13:03:23 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int argc, char **argv)
 	handle_error(data, init_philos(data), E_PHILOINIT);
 	handle_error(data, init_threads(data), E_THREADINIT);
 	if (data->philo_count != data->args[0] - 1)
-		handle_error(data, 0, "Philosopher count mismatch");
+		handle_error(data, 0, E_PHCNTMISMATCH);
 	else
 	{
 		free_all(data);
@@ -60,4 +60,55 @@ static int	check_arguments(t_data *data, char **argv, int i, int j)
 		if (!data->args[i])
 			return (0);
 	return (1);
+}
+
+static int	init_philos(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	if (data->philo_dead)
+		return (1);
+	data->philos = malloc(sizeof(t_philo) * data->args[0]);
+	if (!data->philos)
+		return (0);
+	memset(data->philos, 0, sizeof(t_philo) * data->args[0]);
+	while (++i < data->args[0])
+	{
+		memset(&data->philos[i], 0, sizeof(t_philo));
+		data->philos[i].id = i + 1;
+		data->philos[i].data = data;
+		data->philos[i].eat_count = 0;
+		data->philos[i].last_eat_time = get_time();
+		data->philos[i].left_fork = &data->forks[i];
+		data->philos[i].right_fork = &data->forks[(i + 1) % data->args[0]];
+	}
+	return (1);
+}
+
+static int	init_mutexes(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	if (data->philo_dead)
+		return (1);
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->args[0]);
+	if (!data->forks)
+		return (0);
+	memset(data->forks, 0, sizeof(pthread_mutex_t) * data->args[0]);
+	while (++i < data->args[0])
+	{
+		if (pthread_mutex_init(&data->forks[i], NULL))
+			return (0);
+	}
+	if (pthread_mutex_init(&data->eat_mutex, NULL))
+		return (data->mutex_error = 0, 0);
+	if (pthread_mutex_init(&data->dead_mutex, NULL))
+		return (data->mutex_error = 1, 0);
+	if (pthread_mutex_init(&data->print_mutex, NULL))
+		return (data->mutex_error = 2, 0);
+	if (pthread_mutex_init(&data->ready_mutex, NULL))
+		return (data->mutex_error = 3, 0);
+	return (data->mutex_error = 4, 1);
 }
