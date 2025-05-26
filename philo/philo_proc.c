@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:55:14 by yukoc             #+#    #+#             */
-/*   Updated: 2025/05/20 14:04:14 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/05/26 14:02:20 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,58 @@ void	*philo_routine(t_philo *philo)
 	}
 	if (!(philo->id % 2))
 		ft_sleep(philo->data->args[2]);
-	while (!var_int(&philo->data->dead_mutex, &philo->data->philo_dead, -1, 1))
-		if (!loop(philo, philo->data))
+	while (!variable_ops(&philo->data->dead_mutex,
+		&philo->data->philo_dead, -1, 1))
+		if (!philo_loop(philo, philo->data))
 			break ;
 	return (NULL);
+}
+
+static int	philo_loop(t_philo *philo, t_data *data)
+{
+	if (!life_check(philo, data))
+		return (0);
+	pthread_mutex_lock(philo->left_fork);
+	if (!print_message(philo, "has taken a fork"))
+		return (pthread_mutex_unlock(philo->left_fork), 0);
+	pthread_mutex_lock(philo->right_fork);
+	if (!print_message(philo, "has taken a fork"))
+		return (pthread_mutex_unlock(philo->left_fork),
+			pthread_mutex_unlock(philo->right_fork), 0);
+	if (!print_message(philo, "is eating"))
+		return (pthread_mutex_unlock(philo->left_fork),
+			pthread_mutex_unlock(philo->right_fork), 0);
+	pthread_mutex_lock(&data->eat_mutex);
+	philo->last_eat_time = get_time();
+	philo->eat_count++;
+	pthread_mutex_unlock(&data->eat_mutex);
+	ft_sleep(data->args[2]);
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
+	if (!print_message(philo, "is sleeping"))
+		return (0);
+	ft_sleep(data->args[3]);
+	if (!print_message(philo, "is thinking"))
+		return (0);
+	return (1);
+}
+
+static int	print_message(t_philo *philo, const char *message)
+{
+	long long	time;
+	t_data		*data;
+
+	data = philo->data;
+	pthread_mutex_lock(&philo->data->print_mutex);
+	if (!life_check(philo, data))
+	{
+		pthread_mutex_unlock(&philo->data->print_mutex);
+		return (0);
+	}
+	if (!ft_strcmp(message, "died"))
+		variable_ops(&data->dead_mutex, &data->philo_dead, 1, 1);
+	time = get_time() - philo->data->args[4];
+	printf("%lld %d %s\n", time, philo->id, message);
+	pthread_mutex_unlock(&philo->data->print_mutex);
+	return (1);
 }
