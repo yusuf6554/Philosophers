@@ -6,12 +6,15 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:55:14 by yukoc             #+#    #+#             */
-/*   Updated: 2025/05/26 14:02:20 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/06/10 15:15:25 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <stdio.h>
+
+static int	philo_loop(t_philo *philo, t_data *data);
+static int	print_message(t_philo *philo, const char *message);
 
 int	init_threads(t_data *data)
 {
@@ -22,11 +25,11 @@ int	init_threads(t_data *data)
 	i = 0;
 	if (data->philo_dead)
 		return (1);
-	pthraed_mutex_lock(&data->ready_mutex);
+	pthread_mutex_lock(&data->ready_mutex);
 	while (i < data->args[0])
 	{
 		if (pthread_create(&philo[i].thread, NULL,
-			(void *)philo_routine, &philo[i]))
+				(void *)philo_routine, &philo[i]))
 			break ;
 		data->philo_count = i++;
 	}
@@ -55,7 +58,7 @@ void	*philo_routine(t_philo *philo)
 	if (!(philo->id % 2))
 		ft_sleep(philo->data->args[2]);
 	while (!variable_ops(&philo->data->dead_mutex,
-		&philo->data->philo_dead, -1, 1))
+			&philo->data->philo_dead, -1, 1))
 		if (!philo_loop(philo, philo->data))
 			break ;
 	return (NULL);
@@ -102,10 +105,38 @@ static int	print_message(t_philo *philo, const char *message)
 		pthread_mutex_unlock(&philo->data->print_mutex);
 		return (0);
 	}
-	if (!ft_strcmp(message, "died"))
+	if (!ft_strcmp((char *)message, "died"))
 		variable_ops(&data->dead_mutex, &data->philo_dead, 1, 1);
 	time = get_time() - philo->data->args[4];
 	printf("%lld %d %s\n", time, philo->id, message);
 	pthread_mutex_unlock(&philo->data->print_mutex);
+	return (1);
+}
+
+int	death_check(t_data *data)
+{
+	t_philo	*philo;
+	int		i;
+
+	i = -1;
+	philo = data->philos;
+	if (data->philo_count != data->args[0] - 1)
+		return (0);
+	while (++i < data->args[0])
+	{
+		pthread_mutex_lock(&data->eat_mutex);
+		if (get_time() - philo[i].last_eat_time
+			>= data->args[1])
+		{
+			if (philo[i].eat_count == data->args[4])
+				return (pthread_mutex_unlock(&data->eat_mutex), 0);
+			print_message(&philo[i], "died");
+			pthread_mutex_unlock(&data->eat_mutex);
+			return (0);
+		}
+		pthread_mutex_unlock(&data->eat_mutex);
+		if (i == data->args[0] - 1)
+			i = 0;
+	}
 	return (1);
 }

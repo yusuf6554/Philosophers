@@ -6,22 +6,12 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:52:15 by yukoc             #+#    #+#             */
-/*   Updated: 2025/05/26 14:02:08 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/06/10 15:31:38 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <stdlib.h>
-
-void	free_all(t_data *data)
-{
-	if (data->philos)
-		free(data->philos);
-	if (data->forks)
-		free(data->forks);
-	if (data)
-		free(data);
-}
 
 int	variable_ops(pthread_mutex_t *mutex, int *variable, int value, int type)
 {

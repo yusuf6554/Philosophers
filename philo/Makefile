@@ -1,10 +1,10 @@
-SRCS			= main.c utils.c
+SRCS			= main.c philo_proc.c utils_error.c utils_time.c utils.c
 
 OBJS			= $(SRCS:.c=.o)
 NAME			= philo
 
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -pthread
+CFLAGS			= -ggdb -Wall -Wextra -Werror -pthread
 
 RM				= rm -f
 

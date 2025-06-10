@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:34:26 by yukoc             #+#    #+#             */
-/*   Updated: 2025/05/16 12:59:38 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/06/10 15:31:44 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,16 @@ typedef struct s_data
 	int				philo_dead;
 	int				mutex_error;
 }			t_data;
+
+int			init_threads(t_data *data);
+void		*philo_routine(t_philo *philo);
+int			handle_error(t_data *data, int error_code, char *message);
+long long	get_time(void);
+int			ft_sleep(int time);
+int			variable_ops(pthread_mutex_t *mutex, int *variable,
+				int value, int operation);
+int			ft_strcmp(char *s1, char *s2);
+int			life_check(t_philo *philo, t_data *data);
+int			death_check(t_data *data);
 
 #endif

@@ -6,35 +6,36 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:39:22 by yukoc             #+#    #+#             */
-/*   Updated: 2025/05/16 13:03:23 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/06/10 15:28:35 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+static int	check_arguments(t_data *data, char **argv, int i, int j);
+static int	init_philos(t_data *data);
+static int	init_mutexes(t_data *data);
 
 int	main(int argc, char **argv)
 {
-	t_data	*data;
+	t_data	data;
 
+	memset(&data, 0, sizeof(t_data));
 	if (argc != 5 && argc != 6)
-		handle_error(NULL, 0, E_INVARGNUM);
-	data = malloc(sizeof(t_data));
-	if (!data)
-		handle_error(data, 0, E_MALLOC);
+		handle_error(&data, 0, E_INVARGNUM);
 	if (argc == 5)
-		data->args[4] = -1;
-	handle_error(data, check_arguments(data, argv + 1, -1, -1), E_INVARG);
-	handle_error(data, init_mutexes(data), E_MUTEXINIT);
-	handle_error(data, init_philos(data), E_PHILOINIT);
-	handle_error(data, init_threads(data), E_THREADINIT);
-	if (data->philo_count != data->args[0] - 1)
-		handle_error(data, 0, E_PHCNTMISMATCH);
+		data.args[4] = -1;
+	handle_error(&data, check_arguments(&data, argv + 1, -1, -1), E_INVARG);
+	handle_error(&data, init_mutexes(&data), E_MUTEXINIT);
+	handle_error(&data, init_philos(&data), E_PHILOINIT);
+	handle_error(&data, init_threads(&data), NULL);
+	if (data.philo_count != data.args[0] - 1)
+		return (1);
 	else
-	{
-		free_all(data);
 		return (0);
-	}
 }
 
 static int	check_arguments(t_data *data, char **argv, int i, int j)
