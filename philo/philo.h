@@ -6,25 +6,21 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:34:26 by yukoc             #+#    #+#             */
-/*   Updated: 2025/06/10 15:31:44 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/06/10 15:41:22 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <stdio.h>
 # include <pthread.h>
 # include <inttypes.h>
 # include <stdint.h>
 
 # define E_INVARG "Invalid arguments"
 # define E_PHILOINIT "Philosopher initialization failed"
-# define E_THREADINIT "Thread initialization failed"
 # define E_MUTEXINIT "Mutex initialization failed"
 # define E_INVARGNUM "Invalid number of arguments"
-# define E_MALLOC "Memory allocation failed"
-# define E_PHCNTMISMATCH "Philosopher count mismatch"
 
 typedef struct s_philo
 {

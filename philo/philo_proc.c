@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:55:14 by yukoc             #+#    #+#             */
-/*   Updated: 2025/06/10 15:15:25 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/06/10 15:43:42 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ static int	print_message(t_philo *philo, const char *message)
 	}
 	if (!ft_strcmp((char *)message, "died"))
 		variable_ops(&data->dead_mutex, &data->philo_dead, 1, 1);
-	time = get_time() - philo->data->args[4];
+	time = get_time();
 	printf("%lld %d %s\n", time, philo->id, message);
 	pthread_mutex_unlock(&philo->data->print_mutex);
 	return (1);

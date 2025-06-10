@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:39:22 by yukoc             #+#    #+#             */
-/*   Updated: 2025/06/10 15:28:35 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/06/10 15:48:49 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ static int	init_philos(t_data *data)
 		memset(&data->philos[i], 0, sizeof(t_philo));
 		data->philos[i].id = i + 1;
 		data->philos[i].data = data;
-		data->philos[i].eat_count = 0;
 		data->philos[i].last_eat_time = get_time();
 		data->philos[i].left_fork = &data->forks[i];
 		data->philos[i].right_fork = &data->forks[(i + 1) % data->args[0]];

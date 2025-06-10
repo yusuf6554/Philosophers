@@ -6,12 +6,13 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:58:36 by yukoc             #+#    #+#             */
-/*   Updated: 2025/06/10 15:31:28 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/06/10 15:41:42 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 int	handle_error(t_data *data, int error_code, char *message)
 {
