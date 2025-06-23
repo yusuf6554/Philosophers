@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:55:14 by yukoc             #+#    #+#             */
-/*   Updated: 2025/06/10 15:43:42 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/06/23 14:23:46 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h>
 
 static int	philo_loop(t_philo *philo, t_data *data);
-static int	print_message(t_philo *philo, const char *message);
+static int	print_message(t_philo *philo, char *message);
 
 int	init_threads(t_data *data)
 {
@@ -93,7 +93,7 @@ static int	philo_loop(t_philo *philo, t_data *data)
 	return (1);
 }
 
-static int	print_message(t_philo *philo, const char *message)
+static int	print_message(t_philo *philo, char *message)
 {
 	long long	time;
 	t_data		*data;
@@ -105,8 +105,8 @@ static int	print_message(t_philo *philo, const char *message)
 		pthread_mutex_unlock(&philo->data->print_mutex);
 		return (0);
 	}
-	if (!ft_strcmp((char *)message, "died"))
-		variable_ops(&data->dead_mutex, &data->philo_dead, 1, 1);
+	if (!ft_strcmp(message, "died"))
+		variable_ops(&data->dead_mutex, &data->philo_dead, 1, 0);
 	time = get_time();
 	printf("%lld %d %s\n", time, philo->id, message);
 	pthread_mutex_unlock(&philo->data->print_mutex);
@@ -125,8 +125,7 @@ int	death_check(t_data *data)
 	while (++i < data->args[0])
 	{
 		pthread_mutex_lock(&data->eat_mutex);
-		if (get_time() - philo[i].last_eat_time
-			>= data->args[1])
+		if (get_time() - philo[i].last_eat_time >= data->args[1])
 		{
 			if (philo[i].eat_count == data->args[4])
 				return (pthread_mutex_unlock(&data->eat_mutex), 0);
