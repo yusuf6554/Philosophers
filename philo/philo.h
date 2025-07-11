@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:34:26 by yukoc             #+#    #+#             */
-/*   Updated: 2025/06/10 15:41:22 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/07/11 13:51:36 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # define E_PHILOINIT "Philosopher initialization failed"
 # define E_MUTEXINIT "Mutex initialization failed"
 # define E_INVARGNUM "Invalid number of arguments"
+
+# define SETVALUE 0
+# define GETVALUE 1
 
 typedef struct s_philo
 {
