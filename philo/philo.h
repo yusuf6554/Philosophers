@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:34:26 by yukoc             #+#    #+#             */
-/*   Updated: 2025/07/11 13:51:36 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/07/30 14:18:56 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void		*philo_routine(t_philo *philo);
 int			handle_error(t_data *data, int error_code, char *message);
 long long	get_time(void);
 int			ft_sleep(int time);
-int			variable_ops(pthread_mutex_t *mutex, int *variable,
-				int value, int operation);
+void		set_int(pthread_mutex_t *mutex, int	*dst, int val);
+int			get_int(pthread_mutex_t *mutex, int *src);
 int			ft_strcmp(char *s1, char *s2);
 int			life_check(t_philo *philo, t_data *data);
 int			death_check(t_data *data);

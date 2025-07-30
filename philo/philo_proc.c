@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:55:14 by yukoc             #+#    #+#             */
-/*   Updated: 2025/07/11 13:51:38 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/07/30 14:18:26 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ void	*philo_routine(t_philo *philo)
 	}
 	if (!(philo->id % 2))
 		ft_sleep(philo->data->args[2]);
-	while (!variable_ops(&philo->data->dead_mutex,
-			&philo->data->philo_dead, -1, GETVALUE))
+	while (!get_int(&philo->data->dead_mutex, &philo->data->philo_dead))
 		if (!philo_loop(philo, philo->data))
 			break ;
 	return (NULL);
@@ -106,7 +105,7 @@ static int	print_message(t_philo *philo, char *message)
 		return (0);
 	}
 	if (!ft_strcmp(message, "died"))
-		variable_ops(&data->dead_mutex, &data->philo_dead, 1, SETVALUE);
+		set_int(&data->dead_mutex, &data->philo_dead, 1);
 	time = get_time();
 	printf("%lld %d %s\n", time, philo->id, message);
 	pthread_mutex_unlock(&philo->data->print_mutex);
