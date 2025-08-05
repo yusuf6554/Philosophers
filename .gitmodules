@@ -1,0 +1,3 @@
+[submodule "philo/42-philosophers-tester"]
+	path = philo/42-philosophers-tester
+	url = https://github.com/dantonik/42-philosophers-tester.git
