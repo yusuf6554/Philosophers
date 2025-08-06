@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:34:26 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/06 15:06:06 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/06 15:17:56 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,5 @@ void		set_int(pthread_mutex_t *mutex, int	*dst, int val);
 int			get_int(pthread_mutex_t *mutex, int *src);
 int			ft_strcmp(char *s1, char *s2);
 int			life_check(t_philo *philo, t_data *data);
-int			death_check(t_data *data);
 
 #endif

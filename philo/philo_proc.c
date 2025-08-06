@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:55:14 by yukoc             #+#    #+#             */
-/*   Updated: 2025/07/30 14:18:26 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/06 15:18:00 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 static int	philo_loop(t_philo *philo, t_data *data);
 static int	print_message(t_philo *philo, char *message);
+static int	death_check(t_data *data);
 
 int	init_threads(t_data *data)
 {
@@ -112,7 +113,7 @@ static int	print_message(t_philo *philo, char *message)
 	return (1);
 }
 
-int	death_check(t_data *data)
+static int	death_check(t_data *data)
 {
 	t_philo	*philo;
 	int		i;
