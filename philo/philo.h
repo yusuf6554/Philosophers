@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:34:26 by yukoc             #+#    #+#             */
-/*   Updated: 2025/07/30 14:18:56 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/06 15:06:06 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define PHILO_H
 
 # include <pthread.h>
-# include <inttypes.h>
-# include <stdint.h>
 
 # define E_INVARG "Invalid arguments"
 # define E_PHILOINIT "Philosopher initialization failed"

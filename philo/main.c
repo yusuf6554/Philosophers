@@ -6,13 +6,12 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:39:22 by yukoc             #+#    #+#             */
-/*   Updated: 2025/06/10 15:48:49 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/06 15:07:36 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 
 static int	check_arguments(t_data *data, char **argv, int i, int j);

@@ -6,11 +6,10 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:52:48 by yukoc             #+#    #+#             */
-/*   Updated: 2025/05/26 13:55:49 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/06 15:08:26 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
 #include <sys/time.h>
 #include <unistd.h>
 
