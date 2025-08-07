@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:34:26 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/06 15:17:56 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/07 12:22:26 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef struct s_data
 }			t_data;
 
 int			init_threads(t_data *data);
-void		*philo_routine(t_philo *philo);
 int			handle_error(t_data *data, int error_code, char *message);
 long long	get_time(void);
 int			ft_sleep(int time);
