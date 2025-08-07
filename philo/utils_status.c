@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_time.c                                       :+:      :+:    :+:   */
+/*   utils_status.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/26 13:52:48 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/07 15:21:19 by yukoc            ###   ########.fr       */
+/*   Created: 2025/08/07 15:00:36 by yukoc             #+#    #+#             */
+/*   Updated: 2025/08/07 15:02:36 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/time.h>
-#include <unistd.h>
+#include "philo.h"
 
-long long	get_time(void)
+int	get_status(t_data *data)
 {
-	struct timeval		time;
+	int	status;
 
-	if (gettimeofday(&time, NULL) == -1)
-		return (-1);
-	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+	pthread_mutex_lock(&data->status_mutex);
+	status = data->status;
+	pthread_mutex_unlock(&data->status_mutex);
+	return (status);
 }
 
-void	ft_sleep(int time)
+void	set_status(t_data *data, int status)
 {
-	long long	start_time;
-
-	start_time = get_time();
-	while (get_time() - start_time < time)
-		usleep(100);
+	pthread_mutex_lock(&data->status_mutex);
+	data->status = status;
+	pthread_mutex_unlock(&data->status_mutex);
 }

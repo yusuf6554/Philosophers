@@ -1,0 +1,72 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   monitoring.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/07 14:50:14 by yukoc             #+#    #+#             */
+/*   Updated: 2025/08/07 15:40:33 by yukoc            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philo.h"
+
+int	monitoring(t_data *data)
+{
+	data->start_time = get_time();
+	set_status(data, 1);
+	while (1)
+	{
+		if (monitor_deaths(data))
+			break ;
+		if (monitor_eat_count(data))
+			break ;
+	}
+	return (1);
+}
+
+int	monitor_deaths(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data->philo_count)
+	{
+		if (check_dead(&data->philos[i], data->args[1]))
+		{
+			print_message(&data->philos[i], "died");
+			pthread_mutex_lock(&data->dead_mutex);
+			data->philo_dead = 1;
+			pthread_mutex_unlock(&data->dead_mutex);
+			return (1);
+		}
+	}
+	return (0);
+}
+
+int	monitor_eat_count(t_data *data)
+{
+	int	i;
+	int	count;
+
+	i = -1;
+	count = 0;
+	if (data->args[4] == -1)
+		return (0);
+	while (++i < data->philo_count)
+	{
+		pthread_mutex_lock(&data->philos[i].eat_mutex);
+		if (data->philos[i].eat_count >= data->args[4])
+			count++;
+		pthread_mutex_unlock(&data->philos[i].eat_mutex);
+	}
+	if (count == data->philo_count)
+	{
+		pthread_mutex_lock(&data->dead_mutex);
+		data->philo_dead = 1;
+		pthread_mutex_unlock(&data->dead_mutex);
+		return (1);
+	}
+	return (0);
+}

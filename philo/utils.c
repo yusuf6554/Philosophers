@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:52:15 by yukoc             #+#    #+#             */
-/*   Updated: 2025/07/30 14:20:55 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/07 15:40:51 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,4 @@ int	ft_strcmp(char *s1, char *s2)
 		s2++;
 	}
 	return (*(unsigned char *)s1 - *(unsigned char *)s2);
-}
-
-int	life_check(t_philo *philo, t_data *data)
-{
-	if (philo->eat_count == data->args[4]
-		|| get_int(&data->dead_mutex, &data->philo_dead))
-		return (0);
-	else
-		return (1);
 }

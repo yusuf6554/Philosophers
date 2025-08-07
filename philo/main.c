@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:39:22 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/07 08:54:06 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/07 15:29:43 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	main(int argc, char **argv)
 		handle_error(&data, 0, E_INVARGNUM);
 	if (argc == 5)
 		data.args[4] = -1;
+	data.status = 0;
 	handle_error(&data, check_arguments(&data, argv + 1, -1, -1), E_INVARG);
 	handle_error(&data, init_mutexes(&data), E_MUTEXINIT);
 	handle_error(&data, init_philos(&data), E_PHILOINIT);
@@ -75,6 +76,9 @@ static int	init_philos(t_data *data)
 	memset(data->philos, 0, sizeof(t_philo) * data->args[0]);
 	while (++i < data->args[0])
 	{
+		if (pthread_mutex_init(&data->philos[i].eat_mutex, NULL))
+			return (data->philos[i].has_mutex = 0, 0);
+		data->philos[i].has_mutex = 1;
 		data->philos[i].id = i + 1;
 		data->philos[i].data = data;
 		data->philos[i].last_eat_time = get_time();
@@ -100,13 +104,11 @@ static int	init_mutexes(t_data *data)
 		if (pthread_mutex_init(&data->forks[i], NULL))
 			return (0);
 	}
-	if (pthread_mutex_init(&data->eat_mutex, NULL))
-		return (data->mutex_error = 0, 0);
 	if (pthread_mutex_init(&data->dead_mutex, NULL))
-		return (data->mutex_error = 1, 0);
+		return (0);
 	if (pthread_mutex_init(&data->print_mutex, NULL))
-		return (data->mutex_error = 2, 0);
+		return (data->mutex_error = 1, 0);
 	if (pthread_mutex_init(&data->ready_mutex, NULL))
-		return (data->mutex_error = 3, 0);
-	return (data->mutex_error = 4, 1);
+		return (data->mutex_error = 2, 0);
+	return (data->mutex_error = 3, 1);
 }
