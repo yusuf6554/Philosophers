@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 13:39:22 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/07 15:29:43 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/11 14:26:25 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv)
 	handle_error(&data, init_mutexes(&data), E_MUTEXINIT);
 	handle_error(&data, init_philos(&data), E_PHILOINIT);
 	handle_error(&data, init_threads(&data), NULL);
-	if (data.philo_count != data.args[0] - 1)
+	if (data.philo_count != data.args[0])
 		return (1);
 	else
 		return (0);
@@ -56,10 +56,9 @@ static int	check_arguments(t_data *data, char **argv, int i, int j)
 		if (data->args[i] > 2147483647)
 			return (0);
 	}
-	i = 0;
-	while (i++ < 4)
-		if (!data->args[i])
-			return (0);
+	if (data->args[0] < 1 || data->args[1] < 1 || data->args[2] < 1
+		|| data->args[3] < 1 || data->args[4] == 0)
+		return (0);
 	return (1);
 }
 

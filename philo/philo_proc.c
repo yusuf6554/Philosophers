@@ -6,12 +6,11 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 13:55:14 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/07 15:41:54 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/11 14:01:22 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <stdio.h>
 
 void	*philo_routine(t_philo *philo)
 {
@@ -29,6 +28,7 @@ void	*philo_routine(t_philo *philo)
 		ft_sleep(philo->data->args[3]);
 		philo_think(philo);
 	}
+	return (NULL);
 }
 
 void	philo_fork_lock(t_philo *philo)
@@ -80,17 +80,4 @@ void	philo_think(t_philo *philo)
 	if (i < 0)
 		i = 0;
 	ft_sleep(i);
-}
-
-int	print_message(t_philo *philo, char *message)
-{
-	long long	time;
-	t_data		*data;
-
-	data = philo->data;
-	pthread_mutex_lock(&philo->data->print_mutex);
-	time = get_time() - philo->data->start_time;
-	printf("%lld %d %s\n", time, philo->id, message);
-	pthread_mutex_unlock(&philo->data->print_mutex);
-	return (1);
 }
