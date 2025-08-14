@@ -1,4 +1,4 @@
-SRCS			= main.c philo_proc.c monitoring.c utils_error.c utils_time.c \
+SRCS			= main.c philo_proc.c monitoring.c utils_time.c \
 				utils.c utils_status.c check.c init.c
 
 OBJS			= $(SRCS:.c=.o)
