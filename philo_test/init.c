@@ -6,12 +6,13 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:36:52 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/15 14:00:22 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/15 15:50:42 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 int	init_mutexes(t_data *data)
 {
@@ -45,11 +46,13 @@ int	init_forks(t_data *data)
 int	init_philos(t_data *data)
 {
 	int	i;
+	int	res;
 
 	data->philos = malloc(sizeof(t_philo) * data->philo_count);
 	if (!data->philos)
 		return (-1);
 	i = -1;
+	res = 1;
 	while (++i < data->philo_count)
 	{
 		data->philos[i].id = i + 1;
@@ -57,9 +60,14 @@ int	init_philos(t_data *data)
 		data->philos[i].last_eat_time = get_time();
 		data->philos[i].left_fork = &data->forks[i];
 		data->philos[i].right_fork = &data->forks[(i + 1) % data->philo_count];
+		data->philos[i].mutex_initialized = 0;
+		if (pthread_mutex_init(&data->philos[i].eat_mutex, NULL))
+			res = -1;
+		else
+			data->philos[i].mutex_initialized = 1;
 		data->philos[i].data = data;
 	}
-	return (1);
+	return (res);
 }
 
 int	init(t_data *data, int argc, char **argv)
@@ -77,10 +85,11 @@ int	init(t_data *data, int argc, char **argv)
 	if (init_mutexes(data) == -1)
 		return (-1);
 	data->fork_count = 0;
+	data->thread_count = 0;
+	data->sim_status = 0;
 	if (init_forks(data) == -1)
 		return (-1);
 	if (init_philos(data) == -1)
 		return (-1);
+	return (1);
 }
-
-

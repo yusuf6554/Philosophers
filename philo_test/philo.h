@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:34:26 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/15 14:01:49 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/15 15:51:59 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ typedef struct s_philo
 	long long		last_eat_time;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
+	pthread_mutex_t eat_mutex;
+	int				mutex_initialized;
 	struct s_data	*data;
 }			t_philo;
 
@@ -43,18 +45,37 @@ typedef struct s_data
 	int				thread_count;
 	int				fork_count;
 	int				misc_mutex_count;
+	int				is_dead;
+	int				sim_status;
 }			t_data;
 
 int			check_args(int argc, char **argv);
 int			check_is_integer(char *num);
+int			is_dead(t_data *data);
+int			death_check(t_philo *philo);
+int			check_sim_status(t_data *data);
 
 int			ft_atoi(char *str);
 void		free_all(t_data *data, char	*error);
 long long	get_time(void);
+void		print_message(char *message, t_data *data, int id);
+void		ft_sleep(int ms);
 
 int			init_mutexes(t_data *data);
 int			init_forks(t_data *data);
 int			init_philos(t_data *data);
 int			init(t_data *data, int argc, char **argv);
+
+int			start(t_data *data);
+
+void		*simulation(t_philo *philo);
+int			philo_main(t_philo *philo);
+void		philo_eat(t_philo *philo);
+void		philo_sleep(t_philo *philo);
+void		philo_think(t_philo *philo);
+
+void		*monitoring(t_data *data);
+int			death_monitoring(t_data *data);
+int			eat_monitoring(t_data *data);
 
 #endif
