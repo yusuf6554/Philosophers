@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:34:26 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/15 12:58:08 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/15 14:01:49 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_data
 	int				time_to_sleep;
 	int				must_eat_count;
 	long long		start_time;
+	t_philo			*philos;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	sim_mutex;
 	pthread_mutex_t	death_mutex;
@@ -40,11 +41,20 @@ typedef struct s_data
 	pthread_t		*threads;
 	pthread_t		monitor_thread;
 	int				thread_count;
-	int				mutex_count;
+	int				fork_count;
+	int				misc_mutex_count;
 }			t_data;
 
-int	check_args(int argc, char **argv);
-int	check_is_integer(char *num);
-int	ft_atoi(char *str);
+int			check_args(int argc, char **argv);
+int			check_is_integer(char *num);
+
+int			ft_atoi(char *str);
+void		free_all(t_data *data, char	*error);
+long long	get_time(void);
+
+int			init_mutexes(t_data *data);
+int			init_forks(t_data *data);
+int			init_philos(t_data *data);
+int			init(t_data *data, int argc, char **argv);
 
 #endif
