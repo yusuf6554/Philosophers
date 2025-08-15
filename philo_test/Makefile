@@ -1,4 +1,4 @@
-SRCS			= main.c philo_proc.c utils_error.c utils_time.c utils.c
+SRCS			= main.c
 
 OBJS			= $(SRCS:.c=.o)
 NAME			= philo
