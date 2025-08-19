@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 12:50:21 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/15 15:36:21 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/19 13:44:38 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,10 @@ void	free_all(t_data *data, char	*error)
 		while (++i < data->philo_count)
 			if (data->philos[i].mutex_initialized == 1)
 				pthread_mutex_destroy(&data->philos[i].eat_mutex);
+	if (data->philos)
+		free(data->philos);
+	if (data->threads)
+		free(data->threads);
 	if (error)
 		printf("%s", error);
 }

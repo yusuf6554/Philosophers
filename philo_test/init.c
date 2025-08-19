@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:36:52 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/15 15:50:42 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/19 13:43:07 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	init(t_data *data, int argc, char **argv)
 		return (-1);
 	data->fork_count = 0;
 	data->thread_count = 0;
-	data->sim_status = 0;
+	data->is_dead = 0;
 	if (init_forks(data) == -1)
 		return (-1);
 	if (init_philos(data) == -1)

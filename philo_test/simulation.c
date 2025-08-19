@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 14:13:15 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/15 15:50:23 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/19 13:35:32 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	*simulation(t_philo *philo)
 {
-	while (check_sim_status(philo->data) == 0)
-		;
+	pthread_mutex_lock(&philo->data->sim_mutex);
+	pthread_mutex_unlock(&philo->data->sim_mutex);
 	pthread_mutex_lock(&philo->eat_mutex);
 	philo->last_eat_time = get_time();
 	pthread_mutex_unlock(&philo->eat_mutex);
@@ -33,8 +33,12 @@ int	philo_main(t_philo *philo)
 {
 	if (is_dead(philo->data) == 1)
 		return (-1);
-	philo_eat(philo);
-	philo_sleep(philo);
+	if (philo->data->philo_count > 1)
+		philo_eat(philo);
+	else
+		philo_single(philo);
+	print_message("is sleeping", philo->data, philo->id);
+	ft_sleep(philo->data->time_to_sleep);
 	philo_think(philo);
 	return (1);
 }
@@ -65,12 +69,6 @@ void	philo_eat(t_philo *philo)
 	pthread_mutex_unlock(philo->right_fork);
 }
 
-void	philo_sleep(t_philo *philo)
-{
-	print_message("is sleeping", philo->data, philo->id);
-	ft_sleep(philo->data->time_to_sleep);
-}
-
 void	philo_think(t_philo *philo)
 {
 	int	i;
@@ -83,4 +81,12 @@ void	philo_think(t_philo *philo)
 	else
 		i /= 2;
 	ft_sleep(i);
+}
+
+void	philo_single(t_philo *philo)
+{
+	pthread_mutex_lock(philo->left_fork);
+	print_message("has taken a fork", philo->data, philo->id);
+	ft_sleep(philo->data->time_to_die);
+	pthread_mutex_unlock(philo->left_fork);
 }

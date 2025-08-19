@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 14:08:05 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/15 15:47:40 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/19 13:40:04 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	start(t_data *data)
 	if (!data->threads)
 		return (-1);
 	i = -1;
+	pthread_mutex_lock(&data->sim_mutex);
 	while (++i < data->philo_count)
 	{
 		if (pthread_create(&data->threads[i], NULL, (void *)simulation,
@@ -30,6 +31,7 @@ int	start(t_data *data)
 	}
 	if (pthread_create(&data->monitor_thread, NULL, (void *)monitoring, data))
 		return (-1);
+	pthread_mutex_unlock(&data->sim_mutex);
 	if (pthread_join(data->monitor_thread, NULL))
 		return (-1);
 	i = -1;

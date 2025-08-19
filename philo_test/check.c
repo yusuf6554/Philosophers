@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 12:36:55 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/15 15:53:32 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/19 13:41:38 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	check_args(int argc, char **argv)
 		if (check_is_integer(argv[i]) == -1)
 			return (-1);
 	}
-	if (argc == 6 && ft_atoi(argv[i]) < 1)
+	if (argc == 6 && ft_atoi(argv[5]) < 1)
 		return (-1);
 	return (1);
 }
@@ -64,18 +64,8 @@ int	is_dead(t_data *data)
 
 int	death_check(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->death_mutex);
-	if (get_time() >= philo->last_eat_time + philo->data->time_to_die)
-		return (pthread_mutex_unlock(&philo->data->death_mutex), 1);
-	return (pthread_mutex_unlock(&philo->data->death_mutex), 0);
-}
-
-int	check_sim_status(t_data *data)
-{
-	int	status;
-
-	pthread_mutex_lock(&data->sim_mutex);
-	status = data->sim_status;
-	pthread_mutex_unlock(&data->sim_mutex);
-	return (status);
+	pthread_mutex_lock(&philo->eat_mutex);
+	if (get_time() - philo->last_eat_time > philo->data->time_to_die)
+		return (pthread_mutex_unlock(&philo->eat_mutex), 1);
+	return (pthread_mutex_unlock(&philo->eat_mutex), 0);
 }

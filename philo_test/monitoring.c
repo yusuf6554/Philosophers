@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 14:16:29 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/15 15:53:50 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/19 13:41:29 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 
 void	*monitoring(t_data *data)
 {
-	pthread_mutex_lock(&data->sim_mutex);
-	data->sim_status = 1;
-	pthread_mutex_unlock(&data->sim_mutex);
 	data->start_time = get_time();
 	while (1)
 	{
@@ -38,9 +35,9 @@ int	death_monitoring(t_data *data)
 	{
 		if (death_check(&data->philos[i]) == 1)
 		{
+			print_message("died", data, data->philos[i].id);
 			pthread_mutex_lock(&data->death_mutex);
 			data->is_dead = 1;
-			print_message("died", data, data->philos[i].id);
 			pthread_mutex_unlock(&data->death_mutex);
 			return (1);
 		}
@@ -51,17 +48,25 @@ int	death_monitoring(t_data *data)
 int	eat_monitoring(t_data *data)
 {
 	int	i;
+	int finished_count;
 
 	i = -1;
+	finished_count = 0;
+	if (data->must_eat_count == -1)
+		return (0);
 	while (++i < data->philo_count)
 	{
+		pthread_mutex_lock(&data->philos[i].eat_mutex);
 		if (data->philos[i].eat_count >= data->must_eat_count)
-		{
-			pthread_mutex_lock(&data->death_mutex);
-			data->is_dead = 1;
-			pthread_mutex_unlock(&data->death_mutex);
-			return (1);
-		}
+			finished_count++;
+		pthread_mutex_unlock(&data->philos[i].eat_mutex);
+	}
+	if (finished_count == data->philo_count)
+	{
+		pthread_mutex_lock(&data->death_mutex);
+		data->is_dead = 1;
+		pthread_mutex_unlock(&data->death_mutex);
+		return (1);
 	}
 	return (0);
 }
