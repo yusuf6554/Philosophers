@@ -6,13 +6,12 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 13:36:52 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/19 13:43:07 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/19 14:33:19 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 int	init_mutexes(t_data *data)
 {

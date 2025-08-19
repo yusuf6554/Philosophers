@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 14:08:05 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/19 13:40:04 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/19 14:31:56 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	start(t_data *data)
 	while (++i < data->philo_count)
 	{
 		if (pthread_create(&data->threads[i], NULL, (void *)simulation,
-			&data->philos[i]))
+				&data->philos[i]))
 			return (-1);
 		data->thread_count++;
 	}

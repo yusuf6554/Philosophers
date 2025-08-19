@@ -6,12 +6,11 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 12:36:55 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/19 13:41:38 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/19 14:33:25 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <stdio.h>
 
 int	check_args(int argc, char **argv)
 {

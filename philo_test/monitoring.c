@@ -6,12 +6,11 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 14:16:29 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/19 13:41:29 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/19 14:33:04 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <stdio.h>
 
 void	*monitoring(t_data *data)
 {
@@ -19,9 +18,9 @@ void	*monitoring(t_data *data)
 	while (1)
 	{
 		if (death_monitoring(data) == 1)
-			break;
+			break ;
 		if (eat_monitoring(data) == 1)
-			break;
+			break ;
 	}
 	return (NULL);
 }
@@ -48,7 +47,7 @@ int	death_monitoring(t_data *data)
 int	eat_monitoring(t_data *data)
 {
 	int	i;
-	int finished_count;
+	int	finished_count;
 
 	i = -1;
 	finished_count = 0;

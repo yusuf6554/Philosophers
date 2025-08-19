@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:34:26 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/19 13:41:45 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/19 14:32:43 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_philo
 	long long		last_eat_time;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	pthread_mutex_t eat_mutex;
+	pthread_mutex_t	eat_mutex;
 	int				mutex_initialized;
 	struct s_data	*data;
 }			t_philo;

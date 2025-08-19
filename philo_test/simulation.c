@@ -6,7 +6,7 @@
 /*   By: yukoc <yukoc@student.42kocaeli.com.tr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 14:13:15 by yukoc             #+#    #+#             */
-/*   Updated: 2025/08/19 13:35:32 by yukoc            ###   ########.fr       */
+/*   Updated: 2025/08/19 14:32:18 by yukoc            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*simulation(t_philo *philo)
 	while (1)
 	{
 		if (philo_main(philo) == -1)
-			break;
+			break ;
 	}
 	return (NULL);
 }
@@ -75,7 +75,7 @@ void	philo_think(t_philo *philo)
 
 	print_message("is thinking", philo->data, philo->id);
 	i = philo->data->time_to_die - (philo->data->time_to_eat
-				+ philo->data->time_to_sleep);
+			+ philo->data->time_to_sleep);
 	if (i < 0)
 		i = 0;
 	else
